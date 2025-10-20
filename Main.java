@@ -23,7 +23,7 @@ public class Main {
                     int number = console.nextInt();
                     System.out.println("Смещение ключа равно - " + number + "\n");
                     char[] chars = fileHandler.readFile(file);
-                    fileHandler.encryptedFile(file, caesarCipher.encryption(chars, number));
+                    fileHandler.creatNameEncryptedFile(file, caesarCipher.encryption(chars, number));
                     break;
                 case "2":
                     System.out.println("Режим дешифрования!");
@@ -35,7 +35,7 @@ public class Main {
                     console.nextLine();
                     System.out.println("Смещение ключа равно - " + number2 + "\n");
                     char[] chars2 = fileHandler.readFile(file2);
-                    fileHandler.decryptedFile(file2, caesarCipher.decryption(chars2, number2));
+                    fileHandler.creatNameDecryptedFile(file2, caesarCipher.decryption(chars2, number2));
                     break;
                 case "3":
                     isActive = false;

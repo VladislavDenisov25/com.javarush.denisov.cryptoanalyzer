@@ -9,26 +9,26 @@ class FileHandler {
         countFile++;
     }
 
-    public void encryptedFile(File file, char[] chars) {
+    public void creatNameEncryptedFile(File file, char[] chars) {
 
 
-        Path parentDirectori = file.toPath().getParent();
+        Path parentDirectory = file.toPath().getParent();
 
         String fileName = "encryptedFile" + countFile + ".txt";
-        Path encryptFile = parentDirectori.resolve(fileName);
+        Path encryptFile = parentDirectory.resolve(fileName);
 
         writeFile(encryptFile.toFile(), chars);
 
     }
 
-    public void decryptedFile(File file, char[] chars) {
+    public void creatNameDecryptedFile(File file, char[] chars) {
 
 
-        Path parentDirectori = file.toPath().getParent();
+        Path parentDirectory = file.toPath().getParent();
 
         String fileName = "decryptedFile" + countFile + ".txt";
 
-        Path decryptFile = parentDirectori.resolve(fileName);
+        Path decryptFile = parentDirectory.resolve(fileName);
 
         writeFile(decryptFile.toFile(), chars);
 
