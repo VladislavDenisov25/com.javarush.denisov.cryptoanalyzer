@@ -1,3 +1,4 @@
-/out
-/.idea
-/com.javarush.denisov.cryptoanalyzer.iml
+*.class
+target/
+*.iml
+.idea/
