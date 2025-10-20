@@ -59,6 +59,14 @@ class CaesarCipher {
         return result;
     }
 
+    public void bruteForce(File file, char[] chars) {
+        FileHandler fileHandler = new FileHandler();
+        for (int i = 0; i < CHAR_LENGTH; i++) {
+
+            fileHandler.creatNameBruteForceFile(file, decryption(chars, i), i);
+        }
+    }
+
 
     public int indexSearch(char chr) {
 

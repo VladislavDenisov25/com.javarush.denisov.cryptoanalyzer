@@ -12,7 +12,7 @@ public class Main {
 
         boolean isActive = true;
         while (isActive) {
-            System.out.println("Добро пожаловать!\n\nВыберите режим работы:\n1 - зашифровать текст.\n2 - расшифровать текст.\n3 - для выхода из программы.");
+            System.out.println("Добро пожаловать!\n\nВыберите режим работы:\n1 - зашифровать текст.\n2 - расшифровать текст.\n3 - расшифровать текст методом брутфорс.\n4 - для выхода из программы.");
             switch (console.nextLine()) {
                 case "1":
                     System.out.println("Режим шифрования!");
@@ -37,7 +37,15 @@ public class Main {
                     char[] chars2 = fileHandler.readFile(file2);
                     fileHandler.creatNameDecryptedFile(file2, caesarCipher.decryption(chars2, number2));
                     break;
-                case "3":
+                case "3" :
+                    System.out.println("Режим брутфорс!");
+                    System.out.println("Укажите путь к файлу который нужно дешифровать");
+                    File file3 = new File(console.nextLine());
+                    System.out.println("Ваш файл - " + file3);
+                    char[] chars3 = fileHandler.readFile(file3);
+                    caesarCipher.bruteForce(file3, chars3);
+                    break;
+                case "4":
                     isActive = false;
                     break;
                 default:

@@ -1,17 +1,15 @@
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 class FileHandler {
 
-    private static int countFile;
+    private static int countFile = 0;
 
-    public FileHandler() {
-        countFile++;
-    }
 
     public void creatNameEncryptedFile(File file, char[] chars) {
 
-
+        countFile++;
         Path parentDirectory = file.toPath().getParent();
 
         String fileName = "encryptedFile" + countFile + ".txt";
@@ -23,7 +21,7 @@ class FileHandler {
 
     public void creatNameDecryptedFile(File file, char[] chars) {
 
-
+        countFile++;
         Path parentDirectory = file.toPath().getParent();
 
         String fileName = "decryptedFile" + countFile + ".txt";
@@ -32,6 +30,30 @@ class FileHandler {
 
         writeFile(decryptFile.toFile(), chars);
 
+    }
+
+    public void creatNameBruteForceFile(File file, char[] chars, int i) {
+
+
+        Path parentDirectory = file.toPath().getParent();
+
+
+        Path newDirectory = parentDirectory.resolve("BruteForceFiles");
+        try {
+
+            if (!Files.exists(newDirectory)) {
+                Files.createDirectory(newDirectory);
+            }
+            String fileName = "BruteForceFile" + i + ".txt";
+
+            Path bruteForceFile = newDirectory.resolve(fileName);
+
+
+            writeFile(bruteForceFile.toFile(), chars);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public char[] readFile(File file) {
@@ -53,7 +75,7 @@ class FileHandler {
         return builder.toString().toCharArray();
     }
 
-    public void writeFile(File file, char[] chars){
+    public void writeFile(File file, char[] chars) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
             for (char aChar : chars) {
                 bufferedWriter.write(Character.toString(aChar));
