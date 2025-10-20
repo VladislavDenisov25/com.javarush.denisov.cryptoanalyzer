@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        CaesarСipher caesarСipher = new CaesarСipher();
+        CaesarCipher caesarCipher = new CaesarCipher();
         FileHandler fileHandler = new FileHandler();
 
 
@@ -22,7 +22,8 @@ public class Main {
                     System.out.println("Укажите смещение ключа для шифрования");
                     int number = console.nextInt();
                     System.out.println("Смещение ключа равно - " + number + "\n");
-                    fileHandler.encryptedFile(file, caesarСipher.encryption(file, number));
+                    char[] chars = fileHandler.readFile(file);
+                    fileHandler.encryptedFile(file, caesarCipher.encryption(chars, number));
                     break;
                 case "2":
                     System.out.println("Режим дешифрования!");
@@ -33,7 +34,8 @@ public class Main {
                     int number2 = console.nextInt();
                     console.nextLine();
                     System.out.println("Смещение ключа равно - " + number2 + "\n");
-                    fileHandler.decryptedFile(file2, caesarСipher.decryption(file2, number2));
+                    char[] chars2 = fileHandler.readFile(file2);
+                    fileHandler.decryptedFile(file2, caesarCipher.decryption(chars2, number2));
                     break;
                 case "3":
                     isActive = false;

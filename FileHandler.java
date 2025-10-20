@@ -17,14 +17,7 @@ class FileHandler {
         String fileName = "encryptedFile" + countFile + ".txt";
         Path encryptFile = parentDirectori.resolve(fileName);
 
-
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(encryptFile.toFile()))) {
-            for (int i = 0; i < chars.length; i++) {
-                bufferedWriter.write(Character.toString(chars[i]));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        writeFile(encryptFile.toFile(), chars);
 
     }
 
@@ -37,15 +30,39 @@ class FileHandler {
 
         Path decryptFile = parentDirectori.resolve(fileName);
 
+        writeFile(decryptFile.toFile(), chars);
 
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(decryptFile.toFile()))) {
-            for (int i = 0; i < chars.length; i++) {
-                bufferedWriter.write(Character.toString(chars[i]));
+    }
+
+    public char[] readFile(File file) {
+
+        StringBuilder builder = new StringBuilder();
+
+
+        try (BufferedReader buffer = new BufferedReader(new FileReader(file))) {
+            while (buffer.ready()) {
+                String line = buffer.readLine().toLowerCase();
+                builder.append(line).append("\n");
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.out.println("Файл не существует или неправильно указан путь к файлу");
             throw new RuntimeException(e);
         }
 
+
+        return builder.toString().toCharArray();
     }
+
+    public void writeFile(File file, char[] chars){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+            for (char aChar : chars) {
+                bufferedWriter.write(Character.toString(aChar));
+            }
+        } catch (Exception e) {
+            System.out.println("Неправильно задана директория!");
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
