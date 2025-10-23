@@ -9,7 +9,7 @@ public class Main {
 
 
         Scanner console = new Scanner(System.in);
-
+        // тест
         boolean isActive = true;
         while (isActive) {
             System.out.println("Добро пожаловать!\n\nВыберите режим работы:\n1 - зашифровать текст.\n2 - расшифровать текст.\n3 - расшифровать текст методом брутфорс.\n4 - для выхода из программы.");
