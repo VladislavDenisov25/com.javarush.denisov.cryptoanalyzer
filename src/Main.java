@@ -35,8 +35,9 @@ public class Main {
                     int key = console.nextInt();
 
                     caesarCipher.encryption(fileName, key, operations);
-
+                    System.out.println(AppConstants.finalOperations);
                     break;
+
                 case "2" :
                     System.out.println(AppConstants.mainMenu2);
                     System.out.println(AppConstants.mainMenuFile);

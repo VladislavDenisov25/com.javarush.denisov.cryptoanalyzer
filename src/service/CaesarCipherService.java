@@ -3,9 +3,11 @@ package service;
 import util.*;
 
 import java.io.*;
+import java.lang.runtime.SwitchBootstraps;
 
 
 public class CaesarCipherService {
+    FileHandlerUtil handlerUtil = new FileHandlerUtil();
 
     private static final char[] CHARS_ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к',
             'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю',
@@ -14,7 +16,7 @@ public class CaesarCipherService {
     private static final int CHAR_LENGTH = CHARS_ALPHABET.length;
 
 
-    public char[] encryption(String fileName, int key, char operation) {
+    public void encryption(String fileName, int key, char operation) {
 
         char[] fileText = FileHandlerUtil.readFile(fileName);
         int bias = Math.abs(key % CHAR_LENGTH);
@@ -26,7 +28,7 @@ public class CaesarCipherService {
             int number = indexSearch(nextChar);
 
             if (number != -1) {
-                int index = number + operation + bias;
+                  int index = operation(number, bias, operation);
                 if (index > CHAR_LENGTH - 1) {
                     index = Math.abs(CHAR_LENGTH - index);
                 }
@@ -35,7 +37,7 @@ public class CaesarCipherService {
             result[i] = nextChar;
         }
 
-        return result;
+       handlerUtil.creatNameEncryptedFile(fileName, result);
     }
 
 
@@ -58,6 +60,18 @@ public class CaesarCipherService {
             }
         }
         return -1;
+    }
+
+    public int operation(int a, int b, char operation){
+
+
+          int  index = switch(operation){
+                case '+' -> a + b;
+                case '-' -> a - b;
+              default -> throw new IllegalStateException("Unexpected value: " + operation);
+          };
+
+        return index;
     }
 
 

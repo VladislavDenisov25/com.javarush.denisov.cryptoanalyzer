@@ -12,4 +12,5 @@ public interface AppConstants {
        String selectKey = "Укажите ключ";
        String mainHello = "Добро пожаловать!";
        String erorInput = "Неверный ввод!\n\n";
+       String finalOperations = "Процесс шифрования завершен, имя файла \"encryptedFile\"";
 }

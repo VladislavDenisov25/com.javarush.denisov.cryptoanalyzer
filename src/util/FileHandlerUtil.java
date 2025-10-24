@@ -15,7 +15,7 @@ public class FileHandlerUtil {
         Path parentDirectory = new File(fileName).toPath().getParent();
    //     String fileNameResult = "decryptedFile" + countFile + ".txt";
         String fileNameResult = "encryptedFile" + countFile + ".txt";
-        Path encryptFile = parentDirectory.resolve(fileName);
+        Path encryptFile = parentDirectory.resolve(fileNameResult);
 
         writeFile(encryptFile.toFile(), chars);
 
