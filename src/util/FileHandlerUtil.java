@@ -1,8 +1,10 @@
+package util;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-class FileHandler {
+public class FileHandlerUtil {
 
     private static int countFile = 0;
 
