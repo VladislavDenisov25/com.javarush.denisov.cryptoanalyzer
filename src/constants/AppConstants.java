@@ -8,5 +8,8 @@ public interface AppConstants {
        String mainMenu1 = "Режим Цезарь!";
        String mainMenu2 = "Режим Брутфорс!";
        String mainMenuFile = "Укажите путь к файлу.";
-       String selection = "Чтобы расшифровать введите \"-\" зашифровать \"+\"";
+       String selectionOperation = "Чтобы расшифровать введите \"-\" зашифровать \"+\"";
+       String selectKey = "Укажите ключ";
+       String mainHello = "Добро пожаловать!";
+       String erorInput = "Неверный ввод!\n\n";
 }

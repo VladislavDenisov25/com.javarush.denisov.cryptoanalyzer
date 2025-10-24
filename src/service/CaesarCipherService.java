@@ -1,6 +1,6 @@
 package service;
 
-import util.FileHandlerUtil;
+import util.*;
 
 import java.io.*;
 
@@ -16,14 +16,13 @@ public class CaesarCipherService {
 
     public char[] encryption(String fileName, int key, char operation) {
 
-            // метод который читает файл и создает массив
-        chars[] fileText = FileHandlerUtil.
+        char[] fileText = FileHandlerUtil.readFile(fileName);
         int bias = Math.abs(key % CHAR_LENGTH);
 
-        char[] result = new char[chars.length];
+        char[] result = new char[fileText.length];
 
-        for (int i = 0; i < chars.length; i++) {
-            char nextChar = chars[i];
+        for (int i = 0; i < fileText.length; i++) {
+            char nextChar = fileText[i];
             int number = indexSearch(nextChar);
 
             if (number != -1) {
@@ -40,14 +39,14 @@ public class CaesarCipherService {
     }
 
 
-    public void bruteForce(File file, char[] chars) {
-        FileHandlerUtil fileHandler  = new FileHandlerUtil();
-
-        for (int i = 0; i < CHAR_LENGTH; i++) {
-
-            fileHandler.creatNameBruteForceFile(file, encryption(chars, i), i);//
-        }
-    }
+//    public void bruteForce(File file, char[] chars) {
+//        FileHandlerUtil fileHandler  = new FileHandlerUtil();
+//
+//        for (int i = 0; i < CHAR_LENGTH; i++) {
+//
+//            fileHandler.creatNameBruteForceFile(file, encryption(chars, i), i);//
+//        }
+//    }
 
 
     public int indexSearch(char chr) {

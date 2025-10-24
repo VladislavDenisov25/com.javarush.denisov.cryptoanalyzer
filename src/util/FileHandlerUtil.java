@@ -9,61 +9,50 @@ public class FileHandlerUtil {
     private static int countFile = 0;
 
 
-    public void creatNameEncryptedFile(File file, char[] chars) {
+    public void creatNameEncryptedFile(String  fileName, char[] chars) {
 
         countFile++;
-        Path parentDirectory = file.toPath().getParent();
-
-        String fileName = "encryptedFile" + countFile + ".txt";
+        Path parentDirectory = new File(fileName).toPath().getParent();
+   //     String fileNameResult = "decryptedFile" + countFile + ".txt";
+        String fileNameResult = "encryptedFile" + countFile + ".txt";
         Path encryptFile = parentDirectory.resolve(fileName);
 
         writeFile(encryptFile.toFile(), chars);
 
     }
 
-    public void creatNameDecryptedFile(File file, char[] chars) {
-
-        countFile++;
-        Path parentDirectory = file.toPath().getParent();
-
-        String fileName = "decryptedFile" + countFile + ".txt";
-
-        Path decryptFile = parentDirectory.resolve(fileName);
-
-        writeFile(decryptFile.toFile(), chars);
-
-    }
-
-    public void creatNameBruteForceFile(File file, char[] chars, int i) {
 
 
-        Path parentDirectory = file.toPath().getParent();
+//    public void creatNameBruteForceFile(File file, char[] chars, int i) {
+//
+//
+//        Path parentDirectory = file.toPath().getParent();
+//
+//
+//        Path newDirectory = parentDirectory.resolve("BruteForceFiles");
+//        try {
+//
+//            if (!Files.exists(newDirectory)) {
+//                Files.createDirectory(newDirectory);
+//            }
+//            String fileName = "BruteForceFile" + i + ".txt";
+//
+//            Path bruteForceFile = newDirectory.resolve(fileName);
+//
+//
+//            writeFile(bruteForceFile.toFile(), chars);
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-
-        Path newDirectory = parentDirectory.resolve("BruteForceFiles");
-        try {
-
-            if (!Files.exists(newDirectory)) {
-                Files.createDirectory(newDirectory);
-            }
-            String fileName = "BruteForceFile" + i + ".txt";
-
-            Path bruteForceFile = newDirectory.resolve(fileName);
-
-
-            writeFile(bruteForceFile.toFile(), chars);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public char[] readFile(File file) {
+    public static char[] readFile(String fileName) {
 
         StringBuilder builder = new StringBuilder();
 
 
-        try (BufferedReader buffer = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader buffer = new BufferedReader(new FileReader(new File(fileName)))) {
             while (buffer.ready()) {
                 String line = buffer.readLine().toLowerCase();
                 builder.append(line).append("\n");

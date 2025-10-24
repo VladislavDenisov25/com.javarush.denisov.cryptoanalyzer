@@ -1,6 +1,5 @@
 import constants.AppConstants;
 import service.CaesarCipherService;
-import util.FileHandlerUtil;
 
 import java.io.File;
 import java.util.Scanner;
@@ -18,7 +17,7 @@ public class Main {
 
         boolean isActive = true;
 
-        System.out.println("Добро пожаловать!");
+        System.out.println(AppConstants.mainHello);
 
         while (isActive) {
             System.out.println(AppConstants.mainMenu);
@@ -29,10 +28,10 @@ public class Main {
                     System.out.println(AppConstants.mainMenuFile);
                     String fileName = console.nextLine();
 
-                    System.out.println(AppConstants.selection);
+                    System.out.println(AppConstants.selectionOperation);
                     char operations = console.next().charAt(0);
 
-                    System.out.println("Укажите ключ");
+                    System.out.println(AppConstants.selectKey);
                     int key = console.nextInt();
 
                     caesarCipher.encryption(fileName, key, operations);
@@ -42,16 +41,16 @@ public class Main {
                     System.out.println(AppConstants.mainMenu2);
                     System.out.println(AppConstants.mainMenuFile);
 
-                    File file3 = new File(console.nextLine()); // не тут просто стринг
+                    String fileName2 = console.nextLine();
 
-                    char[] chars3 = fileHandler.readFile(file3); // не тут
-                    caesarCipher.bruteForce(file3, chars3);
+
+         //           caesarCipher.bruteForce(fileName2, chars3);
                     break;
                 case "3":
                     isActive = false;
                     break;
                 default:
-                    System.out.println("Неверный ввод!\n\n");
+                    System.out.println(AppConstants.erorInput);
             }
 
 
