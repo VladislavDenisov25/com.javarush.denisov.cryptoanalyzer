@@ -45,7 +45,7 @@ public class Main {
                     String fileName2 = console.nextLine();
 
 
-         //           caesarCipher.bruteForce(fileName2, chars3);
+          //         caesarCipher.bruteForce(fileName2);
                     break;
                 case "3":
                     isActive = false;

@@ -6,15 +6,20 @@ import java.nio.file.Path;
 
 public class FileHandlerUtil {
 
-    private static int countFile = 0;
 
 
-    public void creatNameEncryptedFile(String  fileName, char[] chars) {
 
-        countFile++;
+    public void creatNameEncryptedFile(String  fileName, char[] chars, char operation) {
+
+
         Path parentDirectory = new File(fileName).toPath().getParent();
-   //     String fileNameResult = "decryptedFile" + countFile + ".txt";
-        String fileNameResult = "encryptedFile" + countFile + ".txt";
+
+        String fileNameResult = "";
+        if (operation == '+') {
+            fileNameResult = "encryptedFile.txt";
+        } else if (operation == '-'){
+            fileNameResult = "decryptionFile.txt";
+        }
         Path encryptFile = parentDirectory.resolve(fileNameResult);
 
         writeFile(encryptFile.toFile(), chars);

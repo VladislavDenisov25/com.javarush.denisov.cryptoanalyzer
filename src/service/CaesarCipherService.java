@@ -3,7 +3,7 @@ package service;
 import util.*;
 
 import java.io.*;
-import java.lang.runtime.SwitchBootstraps;
+
 
 
 public class CaesarCipherService {
@@ -31,22 +31,29 @@ public class CaesarCipherService {
                   int index = operation(number, bias, operation);
                 if (index > CHAR_LENGTH - 1) {
                     index = Math.abs(CHAR_LENGTH - index);
+                } else if (index < 0) {
+                    index = Math.abs(CHAR_LENGTH + index);
                 }
                 nextChar = CHARS_ALPHABET[index];
             }
             result[i] = nextChar;
         }
 
-       handlerUtil.creatNameEncryptedFile(fileName, result);
+       handlerUtil.creatNameEncryptedFile(fileName, result, operation);
     }
 
 
-//    public void bruteForce(File file, char[] chars) {
-//        FileHandlerUtil fileHandler  = new FileHandlerUtil();
+//    public void bruteForce(String fileName) {
+//
+//        char[] chars = handlerUtil.readFile(fileName);
+//
+//
 //
 //        for (int i = 0; i < CHAR_LENGTH; i++) {
+//            encryption(fileName, i, '+');
 //
-//            fileHandler.creatNameBruteForceFile(file, encryption(chars, i), i);//
+//
+//            fileHandler.creatNameBruteForceFile(fileName, encryption(chars, i), i);//
 //        }
 //    }
 
@@ -65,13 +72,11 @@ public class CaesarCipherService {
     public int operation(int a, int b, char operation){
 
 
-          int  index = switch(operation){
-                case '+' -> a + b;
-                case '-' -> a - b;
-              default -> throw new IllegalStateException("Unexpected value: " + operation);
-          };
-
-        return index;
+        return switch(operation){
+              case '+' -> a + b;
+              case '-' -> a - b;
+            default -> throw new IllegalStateException("Unexpected value: " + operation);
+        };
     }
 
 
