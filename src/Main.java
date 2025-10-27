@@ -1,7 +1,6 @@
 import constants.AppConstants;
 import service.CaesarCipherService;
 
-import java.io.File;
 import java.util.Scanner;
 
 
@@ -34,7 +33,7 @@ public class Main {
                     System.out.println(AppConstants.selectKey);
                     int key = console.nextInt();
 
-                    caesarCipher.encryption(fileName, key, operations);
+                    caesarCipher.encryption(fileName, key, operations, "caesar");
                     System.out.println(AppConstants.finalOperations);
                     break;
 
@@ -45,7 +44,7 @@ public class Main {
                     String fileName2 = console.nextLine();
 
 
-          //         caesarCipher.bruteForce(fileName2);
+                 caesarCipher.bruteforce(fileName2);
                     break;
                 case "3":
                     isActive = false;

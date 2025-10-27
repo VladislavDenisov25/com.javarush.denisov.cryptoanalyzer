@@ -28,29 +28,29 @@ public class FileHandlerUtil {
 
 
 
-//    public void creatNameBruteForceFile(File file, char[] chars, int i) {
-//
-//
-//        Path parentDirectory = file.toPath().getParent();
-//
-//
-//        Path newDirectory = parentDirectory.resolve("BruteForceFiles");
-//        try {
-//
-//            if (!Files.exists(newDirectory)) {
-//                Files.createDirectory(newDirectory);
-//            }
-//            String fileName = "BruteForceFile" + i + ".txt";
-//
-//            Path bruteForceFile = newDirectory.resolve(fileName);
-//
-//
-//            writeFile(bruteForceFile.toFile(), chars);
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public void creatNameBruteForceFile(String file, char[] chars, int i) {
+
+
+        Path parentDirectory = new File(file).toPath().getParent();
+
+
+        Path newDirectory = parentDirectory.resolve("BruteForceFiles");
+        try {
+
+            if (!Files.exists(newDirectory)) {
+                Files.createDirectory(newDirectory);
+            }
+            String fileName = "BruteForceFile" + i + ".txt";
+
+            Path bruteForceFile = newDirectory.resolve(fileName);
+
+
+            writeFile(bruteForceFile.toFile(), chars);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static char[] readFile(String fileName) {
 

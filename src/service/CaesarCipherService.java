@@ -2,9 +2,6 @@ package service;
 
 import util.*;
 
-import java.io.*;
-
-
 
 public class CaesarCipherService {
     FileHandlerUtil handlerUtil = new FileHandlerUtil();
@@ -16,7 +13,7 @@ public class CaesarCipherService {
     private static final int CHAR_LENGTH = CHARS_ALPHABET.length;
 
 
-    public void encryption(String fileName, int key, char operation) {
+    public void encryption(String fileName, int key, char operation, String mode) {
 
         char[] fileText = FileHandlerUtil.readFile(fileName);
         int bias = Math.abs(key % CHAR_LENGTH);
@@ -38,24 +35,24 @@ public class CaesarCipherService {
             }
             result[i] = nextChar;
         }
-
-       handlerUtil.creatNameEncryptedFile(fileName, result, operation);
+            if (mode.toLowerCase().equals("caesar")) {
+            handlerUtil.creatNameEncryptedFile(fileName, result, operation);
+        } else if (mode.toLowerCase().equals("bruteforse")) {
+                handlerUtil.creatNameBruteForceFile(fileName, result, key);
+        }
     }
 
 
-//    public void bruteForce(String fileName) {
-//
-//        char[] chars = handlerUtil.readFile(fileName);
-//
-//
-//
-//        for (int i = 0; i < CHAR_LENGTH; i++) {
-//            encryption(fileName, i, '+');
-//
-//
-//            fileHandler.creatNameBruteForceFile(fileName, encryption(chars, i), i);//
-//        }
-//    }
+    public void bruteforce(String fileName) {
+
+        char[] chars = handlerUtil.readFile(fileName);
+
+
+
+        for (int i = 0; i < CHAR_LENGTH; i++) {
+            encryption(fileName, i, '+', "bruteforse");
+        }
+    }
 
 
     public int indexSearch(char chr) {
