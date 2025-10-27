@@ -7,10 +7,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-
         CaesarCipherService caesarCipher = new CaesarCipherService();
-
-
 
         Scanner console = new Scanner(System.in);
 
@@ -33,18 +30,16 @@ public class Main {
                     System.out.println(AppConstants.selectKey);
                     int key = console.nextInt();
 
-                    caesarCipher.encryption(fileName, key, operations, "caesar");
+                    caesarCipher.encryption(fileName, key, operations, AppConstants.modeCaesar);
                     System.out.println(AppConstants.finalOperations);
                     break;
 
-                case "2" :
+                case "2":
                     System.out.println(AppConstants.mainMenu2);
                     System.out.println(AppConstants.mainMenuFile);
 
                     String fileName2 = console.nextLine();
-
-
-                 caesarCipher.bruteforce(fileName2);
+                    caesarCipher.bruteforce(fileName2);
                     break;
                 case "3":
                     isActive = false;
@@ -52,14 +47,13 @@ public class Main {
                 default:
                     System.out.println(AppConstants.erorInput);
             }
-
-
-
-
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+           }
         }
         console.close();
 
-
     }
-
 }

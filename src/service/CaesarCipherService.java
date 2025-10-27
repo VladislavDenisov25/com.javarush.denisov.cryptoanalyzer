@@ -1,5 +1,6 @@
 package service;
 
+import constants.AppConstants;
 import util.*;
 
 
@@ -11,7 +12,6 @@ public class CaesarCipherService {
             'я', '.', ',', '"', ':', '-', '!', '?', ' '};
 
     private static final int CHAR_LENGTH = CHARS_ALPHABET.length;
-
 
     public void encryption(String fileName, int key, char operation, String mode) {
 
@@ -25,7 +25,7 @@ public class CaesarCipherService {
             int number = indexSearch(nextChar);
 
             if (number != -1) {
-                  int index = operation(number, bias, operation);
+                int index = operation(number, bias, operation);
                 if (index > CHAR_LENGTH - 1) {
                     index = Math.abs(CHAR_LENGTH - index);
                 } else if (index < 0) {
@@ -35,25 +35,19 @@ public class CaesarCipherService {
             }
             result[i] = nextChar;
         }
-            if (mode.toLowerCase().equals("caesar")) {
+        if (mode.equalsIgnoreCase(AppConstants.modeCaesar)) {
             handlerUtil.creatNameEncryptedFile(fileName, result, operation);
-        } else if (mode.toLowerCase().equals("bruteforse")) {
-                handlerUtil.creatNameBruteForceFile(fileName, result, key);
+        } else if (mode.equalsIgnoreCase(AppConstants.modeBruteforse)) {
+            handlerUtil.creatNameBruteForceFile(fileName, result, key);
         }
     }
-
 
     public void bruteforce(String fileName) {
 
-        char[] chars = handlerUtil.readFile(fileName);
-
-
-
         for (int i = 0; i < CHAR_LENGTH; i++) {
-            encryption(fileName, i, '+', "bruteforse");
+            encryption(fileName, i, '+', AppConstants.modeBruteforse);
         }
     }
-
 
     public int indexSearch(char chr) {
 
@@ -66,15 +60,12 @@ public class CaesarCipherService {
         return -1;
     }
 
-    public int operation(int a, int b, char operation){
+    public int operation(int a, int b, char operation) {
 
-
-        return switch(operation){
-              case '+' -> a + b;
-              case '-' -> a - b;
+        return switch (operation) {
+            case '+' -> a + b;
+            case '-' -> a - b;
             default -> throw new IllegalStateException("Unexpected value: " + operation);
         };
     }
-
-
 }

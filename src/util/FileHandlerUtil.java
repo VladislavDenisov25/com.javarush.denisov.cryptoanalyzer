@@ -7,17 +7,14 @@ import java.nio.file.Path;
 public class FileHandlerUtil {
 
 
-
-
-    public void creatNameEncryptedFile(String  fileName, char[] chars, char operation) {
-
+    public void creatNameEncryptedFile(String fileName, char[] chars, char operation) {
 
         Path parentDirectory = new File(fileName).toPath().getParent();
 
         String fileNameResult = "";
         if (operation == '+') {
             fileNameResult = "encryptedFile.txt";
-        } else if (operation == '-'){
+        } else if (operation == '-') {
             fileNameResult = "decryptionFile.txt";
         }
         Path encryptFile = parentDirectory.resolve(fileNameResult);
@@ -26,13 +23,9 @@ public class FileHandlerUtil {
 
     }
 
-
-
     public void creatNameBruteForceFile(String file, char[] chars, int i) {
 
-
         Path parentDirectory = new File(file).toPath().getParent();
-
 
         Path newDirectory = parentDirectory.resolve("BruteForceFiles");
         try {
@@ -43,7 +36,6 @@ public class FileHandlerUtil {
             String fileName = "BruteForceFile" + i + ".txt";
 
             Path bruteForceFile = newDirectory.resolve(fileName);
-
 
             writeFile(bruteForceFile.toFile(), chars);
 
@@ -57,7 +49,7 @@ public class FileHandlerUtil {
         StringBuilder builder = new StringBuilder();
 
 
-        try (BufferedReader buffer = new BufferedReader(new FileReader(new File(fileName)))) {
+        try (BufferedReader buffer = new BufferedReader(new FileReader(fileName))) {
             while (buffer.ready()) {
                 String line = buffer.readLine().toLowerCase();
                 builder.append(line).append("\n");
@@ -66,7 +58,6 @@ public class FileHandlerUtil {
             System.out.println("Файл не существует или неправильно указан путь к файлу");
             throw new RuntimeException(e);
         }
-
 
         return builder.toString().toCharArray();
     }
@@ -81,6 +72,4 @@ public class FileHandlerUtil {
             throw new RuntimeException(e);
         }
     }
-
-
 }
