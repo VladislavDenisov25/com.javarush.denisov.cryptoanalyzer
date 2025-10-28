@@ -9,40 +9,34 @@ import java.nio.file.Path;
 public class FileHandlerUtil {
 
 
-    public void creatNameEncryptedFile(String fileName, char[] chars, char operation) {
+    public void createEncryptedFile(String sourceName, char[] content, char operation) {
 
-        Path parentDirectory = new File(fileName).toPath().getParent();
+        Path parentDir = Path.of(sourceName).toAbsolutePath().getParent();
+        String fileName = (operation == '+')
+                ? AppConstants.FILE_NAME_ENCRYPTED
+                : AppConstants.FILE_NAME_DECRYPTED;
 
-        String fileNameResult = "";
-        if (operation == '+') {
-            fileNameResult = AppConstants.fileNameEncrypted;
-        } else if (operation == '-') {
-            fileNameResult = AppConstants.fileNameDecrypted;
-        }
-        Path encryptFile = parentDirectory.resolve(fileNameResult);
+        Path targetFile = parentDir.resolve(fileName);
 
-        writeFile(encryptFile.toFile(), chars);
+        writeFile(targetFile.toFile(), content);
 
     }
 
-    public void creatNameBruteForceFile(String file, char[] chars, int i) {
+    public void createBruteForceFile(String sourceName, char[] content, int key) {
 
-        Path parentDirectory = new File(file).toPath().getParent();
+        Path parentDir = Path.of(sourceName).toAbsolutePath().getParent();
+        Path bruteDir = parentDir.resolve(AppConstants.DIRECTORY_BRUTEFORCE);
 
-        Path newDirectory = parentDirectory.resolve(AppConstants.nameCatalog);
         try {
+            Files.createDirectories(bruteDir);
 
-            if (!Files.exists(newDirectory)) {
-                Files.createDirectory(newDirectory);
-            }
-            String fileName = AppConstants.fileNameBrutforse + i + AppConstants.extension;
+            String fileName = AppConstants.FILE_NAME_BRUTFORSE + key + AppConstants.EXTENSION;
 
-            Path bruteForceFile = newDirectory.resolve(fileName);
-
-            writeFile(bruteForceFile.toFile(), chars);
+            Path target = bruteDir.resolve(fileName);
+            writeFile(target.toFile(), content);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(AppConstants.ERROR_CREAT_FILE_BRUTFORSE + key, e);
         }
     }
 
@@ -57,20 +51,20 @@ public class FileHandlerUtil {
                 builder.append(line).append("\n");
             }
         } catch (IOException e) {
-            System.out.println(AppConstants.exception2);
+            System.err.println(AppConstants.ERROR_FILE_NOT_FOUND + ": " + fileName);
             throw new RuntimeException(e);
         }
 
         return builder.toString().toCharArray();
     }
 
-    public void writeFile(File file, char[] chars) {
+    public void writeFile(File file, char[] content) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
-            for (char aChar : chars) {
+            for (char aChar : content) {
                 bufferedWriter.write(Character.toString(aChar));
             }
-        } catch (Exception e) {
-            System.out.println(AppConstants.exception3);
+        } catch (IOException e) {
+            System.err.println(AppConstants.ERROR_INVALID_OUTPUT_PATH + ": " + file.getPath());
             throw new RuntimeException(e);
         }
     }

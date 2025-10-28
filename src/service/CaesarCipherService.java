@@ -5,7 +5,8 @@ import util.*;
 
 
 public class CaesarCipherService {
-    FileHandlerUtil handlerUtil = new FileHandlerUtil();
+
+    FileHandlerUtil fileHandlerUtil = new FileHandlerUtil();
 
     private static final char[] CHARS_ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к',
             'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю',
@@ -13,7 +14,7 @@ public class CaesarCipherService {
 
     private static final int CHAR_LENGTH = CHARS_ALPHABET.length;
 
-    public void encryption(String fileName, int key, char operation, String mode) {
+    public void encryptFile(String fileName, int key, char operation, String mode) {
 
         char[] fileText = FileHandlerUtil.readFile(fileName);
         int bias = Math.abs(key % CHAR_LENGTH);
@@ -21,51 +22,47 @@ public class CaesarCipherService {
         char[] result = new char[fileText.length];
 
         for (int i = 0; i < fileText.length; i++) {
-            char nextChar = fileText[i];
-            int number = indexSearch(nextChar);
+            char currentChar = fileText[i];
+            int charIndex = findCharIndex(currentChar);
 
-            if (number != -1) {
-                int index = operation(number, bias, operation);
-                if (index > CHAR_LENGTH - 1) {
-                    index = Math.abs(CHAR_LENGTH - index);
-                } else if (index < 0) {
-                    index = Math.abs(CHAR_LENGTH + index);
-                }
-                nextChar = CHARS_ALPHABET[index];
+            if (charIndex != -1) {
+                int shiftedIndex = calculateShift(charIndex, bias, operation);
+                result[i] = CHARS_ALPHABET[shiftedIndex];
+            } else {
+                result[i] = currentChar;
             }
-            result[i] = nextChar;
         }
-        if (mode.equalsIgnoreCase(AppConstants.modeCaesar)) {
-            handlerUtil.creatNameEncryptedFile(fileName, result, operation);
-        } else if (mode.equalsIgnoreCase(AppConstants.modeBruteforse)) {
-            handlerUtil.creatNameBruteForceFile(fileName, result, key);
-        }
-    }
-
-    public void bruteforce(String fileName) {
-
-        for (int i = 0; i < CHAR_LENGTH; i++) {
-            encryption(fileName, i, '+', AppConstants.modeBruteforse);
+        if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_CAESAR)) {
+            fileHandlerUtil.createEncryptedFile(fileName, result, operation);
+        } else if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_BRUTEFORCE)) {
+            fileHandlerUtil.createBruteForceFile(fileName, result, key);
         }
     }
 
-    public int indexSearch(char chr) {
+    public void bruteForceDecrypt(String fileName) {
+
+        for (int key = 0; key < CHAR_LENGTH; key++) {
+            encryptFile(fileName, key, '+', AppConstants.ENCRYPTION_MODE_BRUTEFORCE);
+        }
+    }
+
+    public int findCharIndex(char chr) {
 
         for (int i = 0; i < CHAR_LENGTH; i++) {
-            char chars = CHARS_ALPHABET[i];
-            if (chars == chr) {
+            if (CHARS_ALPHABET[i] == chr) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int operation(int a, int b, char operation) {
+    public int calculateShift(int baseIndex, int bias, char operation) {
 
         return switch (operation) {
-            case '+' -> a + b;
-            case '-' -> a - b;
-            default -> throw new IllegalStateException(AppConstants.exception1 + operation);
+            case '+' -> (baseIndex + bias) % CHAR_LENGTH;
+            case '-' -> (baseIndex - bias + CHAR_LENGTH) % CHAR_LENGTH;
+            default -> throw new IllegalStateException
+                    (AppConstants.ERROR_UNEXPECTED_VALUE + operation);
         };
     }
 }
