@@ -21,4 +21,13 @@ public interface AppConstants {
        String finalOperations = "Процесс шифрования завершен, имя файла \"encryptedFile\"";
        String modeCaesar = "caesar";
        String modeBruteforse = "bruteforse";
+       String fileNameEncrypted = "encryptedFile.txt";
+       String fileNameDecrypted = "decryptionFile.txt";
+       String fileNameBrutforse = "BruteForceFile";
+       String nameCatalog = "BruteForceFiles";
+       String extension = ".txt";
+       String exception1 = "Unexpected value: ";
+       String exception2 = "Файл не существует или неправильно указан путь к файлу";
+       String exception3 = "Некорректно указан путь к результирующему файлу";
+
 }

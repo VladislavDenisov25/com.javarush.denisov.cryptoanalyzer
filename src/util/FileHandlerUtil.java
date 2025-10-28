@@ -1,5 +1,7 @@
 package util;
 
+import constants.AppConstants;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,9 +15,9 @@ public class FileHandlerUtil {
 
         String fileNameResult = "";
         if (operation == '+') {
-            fileNameResult = "encryptedFile.txt";
+            fileNameResult = AppConstants.fileNameEncrypted;
         } else if (operation == '-') {
-            fileNameResult = "decryptionFile.txt";
+            fileNameResult = AppConstants.fileNameDecrypted;
         }
         Path encryptFile = parentDirectory.resolve(fileNameResult);
 
@@ -27,13 +29,13 @@ public class FileHandlerUtil {
 
         Path parentDirectory = new File(file).toPath().getParent();
 
-        Path newDirectory = parentDirectory.resolve("BruteForceFiles");
+        Path newDirectory = parentDirectory.resolve(AppConstants.nameCatalog);
         try {
 
             if (!Files.exists(newDirectory)) {
                 Files.createDirectory(newDirectory);
             }
-            String fileName = "BruteForceFile" + i + ".txt";
+            String fileName = AppConstants.fileNameBrutforse + i + AppConstants.extension;
 
             Path bruteForceFile = newDirectory.resolve(fileName);
 
@@ -55,7 +57,7 @@ public class FileHandlerUtil {
                 builder.append(line).append("\n");
             }
         } catch (IOException e) {
-            System.out.println("Файл не существует или неправильно указан путь к файлу");
+            System.out.println(AppConstants.exception2);
             throw new RuntimeException(e);
         }
 
@@ -68,7 +70,7 @@ public class FileHandlerUtil {
                 bufferedWriter.write(Character.toString(aChar));
             }
         } catch (Exception e) {
-            System.out.println("Неправильно задана директория!");
+            System.out.println(AppConstants.exception3);
             throw new RuntimeException(e);
         }
     }

@@ -65,7 +65,7 @@ public class CaesarCipherService {
         return switch (operation) {
             case '+' -> a + b;
             case '-' -> a - b;
-            default -> throw new IllegalStateException("Unexpected value: " + operation);
+            default -> throw new IllegalStateException(AppConstants.exception1 + operation);
         };
     }
 }
