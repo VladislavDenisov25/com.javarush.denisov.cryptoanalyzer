@@ -13,11 +13,11 @@ public interface AppConstants {
 
 
 
-       String INPUT_FILE = "Укажите путь к файлу.";
-       String INPUT_KEY = "Укажите ключ";
+       String INPUT_FILE = "Укажите путь к файлу:";
+       String INPUT_KEY = "Укажите ключ:";
        String INVALID_INPUT = "Неверный ввод!\n";
 
-       String WELCOME = "Добро пожаловать!";
+
        String PROCESS_COMPLETE = "Процесс шифрования завершен, имя файла \"encryptedFile\"";
        String ENCRYPTION_MODE_CAESAR = "caesar";
        String ENCRYPTION_MODE_BRUTEFORCE = "bruteforse";
