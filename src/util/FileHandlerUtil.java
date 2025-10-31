@@ -9,10 +9,10 @@ import java.nio.file.Path;
 public class FileHandlerUtil {
 
 
-    public void createEncryptedFile(String sourceName, char[] content, char operation) {
+    public void createEncryptedFile(String sourceName, char[] content, boolean isEncrypt) {
 
         Path parentDir = Path.of(sourceName).toAbsolutePath().getParent();
-        String fileName = (operation == '+')
+        String fileName = (isEncrypt)
                 ? AppConstants.FILE_NAME_ENCRYPTED
                 : AppConstants.FILE_NAME_DECRYPTED;
 

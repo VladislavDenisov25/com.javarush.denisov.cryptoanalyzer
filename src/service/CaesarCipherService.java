@@ -14,7 +14,7 @@ public class CaesarCipherService {
 
     private static final int CHAR_LENGTH = CHARS_ALPHABET.length;
 
-    public void encryptFile(String fileName, int key, char operation, String mode) {
+    public void encryptFile(String fileName, int key, boolean isEncrypt, String mode) {
 
         char[] fileText = FileHandlerUtil.readFile(fileName);
         int bias = Math.abs(key % CHAR_LENGTH);
@@ -26,14 +26,14 @@ public class CaesarCipherService {
             int charIndex = findCharIndex(currentChar);
 
             if (charIndex != -1) {
-                int shiftedIndex = calculateShift(charIndex, bias, operation);
+                int shiftedIndex = calculateShift(charIndex, bias, isEncrypt);
                 result[i] = CHARS_ALPHABET[shiftedIndex];
             } else {
                 result[i] = currentChar;
             }
         }
         if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_CAESAR)) {
-            fileHandlerUtil.createEncryptedFile(fileName, result, operation);
+            fileHandlerUtil.createEncryptedFile(fileName, result, isEncrypt);
         } else if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_BRUTEFORCE)) {
             fileHandlerUtil.createBruteForceFile(fileName, result, key);
         }
@@ -42,7 +42,7 @@ public class CaesarCipherService {
     public void bruteForceDecrypt(String fileName) {
 
         for (int key = 0; key < CHAR_LENGTH; key++) {
-            encryptFile(fileName, key, '+', AppConstants.ENCRYPTION_MODE_BRUTEFORCE);
+            encryptFile(fileName, key, true, AppConstants.ENCRYPTION_MODE_BRUTEFORCE);
         }
     }
 
@@ -56,13 +56,11 @@ public class CaesarCipherService {
         return -1;
     }
 
-    public int calculateShift(int baseIndex, int bias, char operation) {
+    public int calculateShift(int baseIndex, int bias, boolean isEcrypt) {
 
-        return switch (operation) {
-            case '+' -> (baseIndex + bias) % CHAR_LENGTH;
-            case '-' -> (baseIndex - bias + CHAR_LENGTH) % CHAR_LENGTH;
-            default -> throw new IllegalStateException
-                    (AppConstants.ERROR_UNEXPECTED_VALUE + operation);
+        return switch (isEcrypt) {
+            case true -> (baseIndex + bias) % CHAR_LENGTH;
+            case false -> (baseIndex - bias + CHAR_LENGTH) % CHAR_LENGTH;
         };
     }
 }
