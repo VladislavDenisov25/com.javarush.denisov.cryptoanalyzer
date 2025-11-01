@@ -11,14 +11,12 @@ public interface AppConstants {
                4. Взлом методом \"статич. анализа\".
                0. Выход.""";
 
-
-
        String INPUT_FILE = "Укажите путь к файлу:";
        String INPUT_KEY = "Укажите ключ:";
        String INVALID_INPUT = "Неверный ввод!\n";
+       String GOOD_BAY = "Вы закрыли программу, всего хорошего!";
 
-
-       String PROCESS_COMPLETE = "Процесс шифрования завершен, имя файла \"encryptedFile\"";
+       String PROCESS_COMPLETE = "Файл сохранен, путь до результирующего файла: ";
        String ENCRYPTION_MODE_CAESAR = "caesar";
        String ENCRYPTION_MODE_BRUTEFORCE = "bruteforse";
 
@@ -28,7 +26,7 @@ public interface AppConstants {
        String DIRECTORY_BRUTEFORCE = "BruteForceFiles";
        String EXTENSION = ".txt";
 
-       String ERROR_UNEXPECTED_VALUE = "Unexpected value: ";
+       String ERROR_FORMAT_VALUE = "Введите целое число!";
        String ERROR_FILE_NOT_FOUND = "Файл не существует или неправильно указан путь к файлу";
        String ERROR_INVALID_OUTPUT_PATH = "Некорректно указан путь к результирующему файлу";
        String ERROR_CREAT_FILE_BRUTFORSE = "Ошибка при создании файла для brute-force: ";

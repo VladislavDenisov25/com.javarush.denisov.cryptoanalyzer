@@ -6,17 +6,12 @@ import java.util.Scanner;
 
 public class Main {
 
-   private static final  CaesarCipherService caesarCipher = new CaesarCipherService();
+    private static final CaesarCipherService caesarCipher = new CaesarCipherService();
 
-   private static final  Scanner console = new Scanner(System.in);
+    private static final Scanner console = new Scanner(System.in);
 
 
     public static void main(String[] args) {
-
-
-
-
-
 
 
         while (true) {
@@ -30,33 +25,28 @@ public class Main {
                 case 2 -> encrypt(false);
                 case 3 -> bruteForse();
                 case 4 -> System.out.println();
-                case 0 -> System.out.println("Всего хорошего!");
+                case 0 -> System.out.println(AppConstants.GOOD_BAY);
                 default -> System.out.println(AppConstants.INVALID_INPUT);
             }
-
         }
-
-
-
     }
 
-    public static void bruteForse(){
+    public static void bruteForse() {
+
         System.out.println(AppConstants.INPUT_FILE);
 
         String fileName2 = console.nextLine();
         caesarCipher.bruteForceDecrypt(fileName2);
     }
 
+    public static void encrypt(boolean isEncrypt) {
 
-
-    public static void encrypt(boolean isEncrypt){
         String fileName = readNameFile(AppConstants.INPUT_FILE);
         int key = readInt(AppConstants.INPUT_KEY);
 
         caesarCipher.encryptFile(fileName, key, isEncrypt, AppConstants.ENCRYPTION_MODE_CAESAR);
 
     }
-
 
     public static int readInt(String string) {
 
@@ -65,14 +55,14 @@ public class Main {
                 System.out.print(string);
                 return Integer.parseInt(console.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println("Введите целое число!");
+                System.out.println(AppConstants.ERROR_FORMAT_VALUE);
             }
         }
     }
 
     public static String readNameFile(String string) {
+
         System.out.print(string);
         return console.nextLine();
     }
-
 }
