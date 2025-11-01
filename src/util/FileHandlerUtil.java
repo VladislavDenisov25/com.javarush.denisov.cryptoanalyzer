@@ -19,6 +19,7 @@ public class FileHandlerUtil {
         Path targetFile = parentDir.resolve(fileName);
 
         writeFile(targetFile.toFile(), content);
+        System.out.printf("Файл сохранен, путь до результирующего файла: %s\n", targetFile);
 
     }
 

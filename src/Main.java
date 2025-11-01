@@ -26,40 +26,12 @@ public class Main {
             int numberMenu = Integer.parseInt(console.nextLine());
 
             switch (numberMenu) {
-                case 1:
-                    String fileName = readNameFile(AppConstants.INPUT_FILE);
-                    int key = readInt(AppConstants.INPUT_KEY);
-
-                    caesarCipher.encryptFile(fileName, key, true, AppConstants.ENCRYPTION_MODE_CAESAR);
-                    System.out.println(AppConstants.PROCESS_COMPLETE);
-
-                    break;
-                case 2:
-                    System.out.println(AppConstants.INPUT_FILE);
-                    String fileName1 = console.nextLine();
-
-                    System.out.println(AppConstants.INPUT_KEY);
-                    int key1 = console.nextInt();
-
-                    caesarCipher.encryptFile(fileName1, key1, false, AppConstants.ENCRYPTION_MODE_CAESAR);
-                    System.out.println(AppConstants.PROCESS_COMPLETE);
-                    break;
-                case 3:
-
-                    System.out.println(AppConstants.INPUT_FILE);
-
-                    String fileName2 = console.nextLine();
-                    caesarCipher.bruteForceDecrypt(fileName2);
-                    break;
-                case 4:
-
-
-
-                    break;
-                case 0:
-                    return;
-                default:
-                    System.out.println(AppConstants.INVALID_INPUT);
+                case 1 -> encrypt(true);
+                case 2 -> encrypt(false);
+                case 3 -> bruteForse();
+                case 4 -> System.out.println();
+                case 0 -> System.out.println("Всего хорошего!");
+                default -> System.out.println(AppConstants.INVALID_INPUT);
             }
 
         }
@@ -67,6 +39,24 @@ public class Main {
 
 
     }
+
+    public static void bruteForse(){
+        System.out.println(AppConstants.INPUT_FILE);
+
+        String fileName2 = console.nextLine();
+        caesarCipher.bruteForceDecrypt(fileName2);
+    }
+
+
+
+    public static void encrypt(boolean isEncrypt){
+        String fileName = readNameFile(AppConstants.INPUT_FILE);
+        int key = readInt(AppConstants.INPUT_KEY);
+
+        caesarCipher.encryptFile(fileName, key, isEncrypt, AppConstants.ENCRYPTION_MODE_CAESAR);
+
+    }
+
 
     public static int readInt(String string) {
 
