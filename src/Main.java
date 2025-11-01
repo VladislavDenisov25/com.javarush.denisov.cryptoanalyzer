@@ -1,12 +1,15 @@
 import constants.AppConstants;
 import service.CaesarCipherService;
+import service.StaticAnalysisService;
 
 import java.util.Scanner;
 
 
 public class Main {
-
+// /Users/vlad/Downloads/test.txt
     private static final CaesarCipherService caesarCipher = new CaesarCipherService();
+
+    private static final StaticAnalysisService staticAnalysis = new StaticAnalysisService();
 
     private static final Scanner console = new Scanner(System.in);
 
@@ -24,19 +27,22 @@ public class Main {
                 case 1 -> encrypt(true);
                 case 2 -> encrypt(false);
                 case 3 -> bruteForse();
-                case 4 -> System.out.println();
+                case 4 -> statAnalysis();
                 case 0 -> System.out.println(AppConstants.GOOD_BAY);
                 default -> System.out.println(AppConstants.INVALID_INPUT);
             }
         }
     }
+    public static void statAnalysis(){
+        String fileName = readNameFile(AppConstants.INPUT_FILE);
+        staticAnalysis.staticAtac(fileName);
+    }
 
     public static void bruteForse() {
 
-        System.out.println(AppConstants.INPUT_FILE);
+        String fileName = readNameFile(AppConstants.INPUT_FILE);
 
-        String fileName2 = console.nextLine();
-        caesarCipher.bruteForceDecrypt(fileName2);
+        caesarCipher.bruteForceDecrypt(fileName);
     }
 
     public static void encrypt(boolean isEncrypt) {
