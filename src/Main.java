@@ -11,6 +11,7 @@ public class Main {
 
     private static final StaticAnalysisService staticAnalysis = new StaticAnalysisService();
 
+
     private static final Scanner console = new Scanner(System.in);
 
 
@@ -35,7 +36,8 @@ public class Main {
     }
     public static void statAnalysis(){
         String fileName = readNameFile(AppConstants.INPUT_FILE);
-        staticAnalysis.staticAtac(fileName);
+        staticAnalysis.decrypt(fileName);
+
     }
 
     public static void bruteForse() {

@@ -3,8 +3,11 @@ package service;
 import constants.AppConstants;
 import util.*;
 
+import java.util.HashMap;
+
 
 public class CaesarCipherService {
+
 
     FileHandlerUtil fileHandlerUtil = new FileHandlerUtil();
 
@@ -12,9 +15,9 @@ public class CaesarCipherService {
             'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю',
             'я', '.', ',', '"', ':', '-', '!', '?', ' '};
 
-    private static final int CHAR_LENGTH = CHARS_ALPHABET.length;
+     static final int CHAR_LENGTH = CHARS_ALPHABET.length;
 
-    public void encryptFile(String fileName, int key, boolean isEncrypt, String mode) {
+    public char[] encryptFile(String fileName, int key, boolean isEncrypt, String mode) {
 
         char[] fileText = FileHandlerUtil.readFile(fileName);
         int bias = Math.abs(key % CHAR_LENGTH);
@@ -37,6 +40,7 @@ public class CaesarCipherService {
         } else if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_BRUTEFORCE)) {
             fileHandlerUtil.createBruteForceFile(fileName, result, key);
         }
+        return result;
     }
 
     public void bruteForceDecrypt(String fileName) {
@@ -63,4 +67,6 @@ public class CaesarCipherService {
             case false -> (baseIndex - bias + CHAR_LENGTH) % CHAR_LENGTH;
         };
     }
+
+
 }

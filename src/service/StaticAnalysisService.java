@@ -1,22 +1,18 @@
 package service;
 
+
+import constants.AppConstants;
 import util.FileHandlerUtil;
 
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class StaticAnalysisService {
+    CaesarCipherService caesarCipherService = new CaesarCipherService();
 
-    private char[] fileText;
+    private char[] chars;
 
-    private static final HashMap<Character, Double> FREQUENCY_CHARS_FILE = new HashMap<>();
 
-    private static final HashMap<Character, Double> FREQUENCY_CHARS = new HashMap<>() {{
+    private final HashMap<Character, Double> FREQUENCY_CHARS = new HashMap<>() {{
         put(' ', 0.175);
         put('о', 0.090);
         put('е', 0.072);
@@ -26,38 +22,67 @@ public class StaticAnalysisService {
         put('т', 0.053);
     }};
 
-    public void staticAtac(String fileName) {
+    public HashMap<Character, Double> calculateFrequency(String fileText) {
 
-        fileText = FileHandlerUtil.readFile(fileName);
-        for (char c : fileText) {
-            if (!locatedHasMap(c)) {
+        HashMap<Character, Double> frequencyCharsFile = new HashMap<>();
+         chars = FileHandlerUtil.readFile(fileText);
+        for (char c : chars) {
+            if (!frequencyCharsFile.containsKey(c)) {
                 double proc = proccentInput(c);
-                FREQUENCY_CHARS_FILE.put(c, proc);
+                frequencyCharsFile.put(c, proc);
             }
         }
-        biasKey(fileName);
-    }
 
-    public boolean locatedHasMap(char nextChar) {
-        return FREQUENCY_CHARS_FILE.containsKey(nextChar);
-    }
-
-    public void biasKey(String fileName) {
-        for (Map.Entry<Character, Double> entry : FREQUENCY_CHARS_FILE.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
+        return frequencyCharsFile;
     }
 
     public double proccentInput(char nextChar) {
         int resultCount = 0;
-        for (char c : fileText) {
+        for (char c : chars) {
             if (c == nextChar) {
                 resultCount++;
             }
         }
-        double procent = (resultCount * 1.0 / fileText.length) ;
-
+        double procent = (resultCount * 1.0 / chars.length);
 
         return (double) Math.round(procent * 1000) / 1000;
+    }
+
+
+    public void decrypt(String text) {
+
+        HashMap<Character, Double> freqDecrypted = calculateFrequency(text);
+
+        int bestKey = -1;
+        double bestDistance = Double.MAX_VALUE;
+
+        for (int i = 0; i < caesarCipherService.CHAR_LENGTH; i++) {
+
+
+            double distance = calculateFrequencyDistance(freqDecrypted, i); // ширина
+
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                bestKey = i;
+            }
+        }
+        caesarCipherService.encryptFile(text, bestKey, false, AppConstants.ENCRYPTION_MODE_CAESAR);
+
+    }
+
+    public  double calculateFrequencyDistance(HashMap<Character, Double> encryptionFile, int key) {
+            double dist = 0.0;
+
+        for (Map.Entry<Character, Double> entry : FREQUENCY_CHARS.entrySet()) {
+            char keys = entry.getKey();
+            double value = entry.getValue();
+
+            char[] decrypt = caesarCipherService.encryptFile(String.valueOf(keys), key, false, null);  // даю текст а не файл
+            double activDist = encryptionFile.getOrDefault(decrypt, 0.0);
+
+            dist += Math.pow(value - activDist, 2);
+
+        }
+        return Math.sqrt(dist);
     }
 }
