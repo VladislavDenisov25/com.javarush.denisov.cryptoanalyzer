@@ -7,7 +7,7 @@ import util.FileHandlerUtil;
 import java.util.*;
 
 public class StaticAnalysisService {
-    CaesarCipherService caesarCipherService = new CaesarCipherService();
+   static CaesarCipherService caesarCipherService = new CaesarCipherService();
 
     private char[] chars;
 
@@ -66,6 +66,7 @@ public class StaticAnalysisService {
                 bestKey = i;
             }
         }
+        System.out.printf("Ключ для расшифровки - %d, ширина - %f\n", bestKey, bestDistance);
         caesarCipherService.encryptFile(text, bestKey, false, AppConstants.ENCRYPTION_MODE_CAESAR);
 
     }
@@ -77,7 +78,7 @@ public class StaticAnalysisService {
             char keys = entry.getKey();
             double value = entry.getValue();
 
-            char[] decrypt = caesarCipherService.encryptFile(String.valueOf(keys), key, false, null);  // даю текст а не файл
+            char decrypt = encrypt(keys, key);
             double activDist = encryptionFile.getOrDefault(decrypt, 0.0);
 
             dist += Math.pow(value - activDist, 2);
@@ -85,4 +86,14 @@ public class StaticAnalysisService {
         }
         return Math.sqrt(dist);
     }
+
+    public static char encrypt(char oldChar, int key){
+        char result;
+       int indexOld = caesarCipherService.findCharIndex(oldChar);
+       int newIndex = (indexOld + key) % caesarCipherService.getCharsAlphabet().length;
+        result = caesarCipherService.getCharsAlphabet()[newIndex];
+        return result;
+    }
+
+
 }

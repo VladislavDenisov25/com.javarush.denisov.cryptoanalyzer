@@ -11,7 +11,7 @@ public class CaesarCipherService {
 
     FileHandlerUtil fileHandlerUtil = new FileHandlerUtil();
 
-    private static final char[] CHARS_ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к',
+    public static final char[] CHARS_ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к',
             'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю',
             'я', '.', ',', '"', ':', '-', '!', '?', ' '};
 
@@ -67,6 +67,8 @@ public class CaesarCipherService {
             case false -> (baseIndex - bias + CHAR_LENGTH) % CHAR_LENGTH;
         };
     }
-
+    public char[] getCharsAlphabet(){
+        return CHARS_ALPHABET;
+    }
 
 }
