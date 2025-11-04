@@ -16,26 +16,23 @@ public class CaesarCipherService extends Alphabet{
     public char[] encryptFile(String fileName, int key, boolean isEncrypt, String mode) {
 
         char[] fileText = FileHandlerUtil.readFile(fileName);
-        int bias = Math.abs(key % getAlphabetLength());
-
         char[] result = new char[fileText.length];
 
         for (int i = 0; i < fileText.length; i++) {
-            char currentChar = fileText[i];
-            int charIndex = findCharIndex(currentChar);
+            int charIndex = findCharIndex(fileText[i]);
 
             if (charIndex != -1) {
-                int shiftedIndex = calculateShift(charIndex, bias, isEncrypt);
+                int shiftedIndex = calculateShift(charIndex, key, isEncrypt);
                 result[i] = getAlphabet()[shiftedIndex];
             } else {
-                result[i] = currentChar;
+                result[i] = fileText[i];
             }
         }
-        if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_CAESAR)) {
-            fileHandlerUtil.createEncryptedFile(fileName, result, isEncrypt);
-        } else if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_BRUTEFORCE)) {
-            fileHandlerUtil.createBruteForceFile(fileName, result, key);
-        }
+//        if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_CAESAR)) {
+//            fileHandlerUtil.createEncryptedFile(fileName, result, isEncrypt);
+//        } else if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_BRUTEFORCE)) {
+//            fileHandlerUtil.createBruteForceFile(fileName, result, key);
+//        }
         return result;
     }
 
@@ -56,8 +53,8 @@ public class CaesarCipherService extends Alphabet{
         return -1;
     }
 
-    public int calculateShift(int baseIndex, int bias, boolean isEcrypt) {
-
+    public int calculateShift(int baseIndex, int key, boolean isEcrypt) {
+        int bias = Math.abs(key % getAlphabetLength());
         return switch (isEcrypt) {
             case true -> (baseIndex + bias) % getAlphabetLength();
             case false -> (baseIndex - bias + getAlphabetLength()) % getAlphabetLength();

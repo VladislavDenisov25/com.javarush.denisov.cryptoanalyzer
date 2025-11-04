@@ -87,13 +87,13 @@ public class StaticAnalysisService extends Alphabet{
         return Math.sqrt(dist);
     }
 
-    public static char encrypt(char oldChar, int key){
-        char result;
-       int indexOld = caesarCipherService.findCharIndex(oldChar);
-       int newIndex = (indexOld + key) % caesarCipherService.getAlphabet().length;
-        result = caesarCipherService.getAlphabet()[newIndex];
-        return result;
-    }
+//    public static char encrypt(char oldChar, int key){
+//        char result;
+//       int indexOld = caesarCipherService.findCharIndex(oldChar);
+//       int newIndex = (indexOld + key) % caesarCipherService.getAlphabet().length;
+//        result = caesarCipherService.getAlphabet()[newIndex];
+//        return result;
+//    }
 
 
 }
