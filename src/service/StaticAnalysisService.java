@@ -6,7 +6,7 @@ import util.FileHandlerUtil;
 
 import java.util.*;
 
-public class StaticAnalysisService {
+public class StaticAnalysisService extends Alphabet{
    static CaesarCipherService caesarCipherService = new CaesarCipherService();
 
     private char[] chars;
@@ -56,7 +56,7 @@ public class StaticAnalysisService {
         int bestKey = -1;
         double bestDistance = Double.MAX_VALUE;
 
-        for (int i = 0; i < caesarCipherService.CHAR_LENGTH; i++) {
+        for (int i = 0; i < getAlphabetLength(); i++) {
 
 
             double distance = calculateFrequencyDistance(freqDecrypted, i); // ширина
@@ -90,8 +90,8 @@ public class StaticAnalysisService {
     public static char encrypt(char oldChar, int key){
         char result;
        int indexOld = caesarCipherService.findCharIndex(oldChar);
-       int newIndex = (indexOld + key) % caesarCipherService.getCharsAlphabet().length;
-        result = caesarCipherService.getCharsAlphabet()[newIndex];
+       int newIndex = (indexOld + key) % caesarCipherService.getAlphabet().length;
+        result = caesarCipherService.getAlphabet()[newIndex];
         return result;
     }
 

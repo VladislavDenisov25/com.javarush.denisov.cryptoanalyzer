@@ -3,24 +3,20 @@ package service;
 import constants.AppConstants;
 import util.*;
 
-import java.util.HashMap;
 
-
-public class CaesarCipherService {
+public class CaesarCipherService extends Alphabet{
 
 
     FileHandlerUtil fileHandlerUtil = new FileHandlerUtil();
 
-    public static final char[] CHARS_ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к',
-            'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю',
-            'я', '.', ',', '"', ':', '-', '!', '?', ' '};
 
-     static final int CHAR_LENGTH = CHARS_ALPHABET.length;
+
+
 
     public char[] encryptFile(String fileName, int key, boolean isEncrypt, String mode) {
 
         char[] fileText = FileHandlerUtil.readFile(fileName);
-        int bias = Math.abs(key % CHAR_LENGTH);
+        int bias = Math.abs(key % getAlphabetLength());
 
         char[] result = new char[fileText.length];
 
@@ -30,7 +26,7 @@ public class CaesarCipherService {
 
             if (charIndex != -1) {
                 int shiftedIndex = calculateShift(charIndex, bias, isEncrypt);
-                result[i] = CHARS_ALPHABET[shiftedIndex];
+                result[i] = getAlphabet()[shiftedIndex];
             } else {
                 result[i] = currentChar;
             }
@@ -45,15 +41,15 @@ public class CaesarCipherService {
 
     public void bruteForceDecrypt(String fileName) {
 
-        for (int key = 0; key < CHAR_LENGTH; key++) {
+        for (int key = 0; key < getAlphabetLength(); key++) {
             encryptFile(fileName, key, true, AppConstants.ENCRYPTION_MODE_BRUTEFORCE);
         }
     }
 
     public int findCharIndex(char chr) {
 
-        for (int i = 0; i < CHAR_LENGTH; i++) {
-            if (CHARS_ALPHABET[i] == chr) {
+        for (int i = 0; i < getAlphabetLength(); i++) {
+            if (getAlphabet()[i] == chr) {
                 return i;
             }
         }
@@ -63,12 +59,10 @@ public class CaesarCipherService {
     public int calculateShift(int baseIndex, int bias, boolean isEcrypt) {
 
         return switch (isEcrypt) {
-            case true -> (baseIndex + bias) % CHAR_LENGTH;
-            case false -> (baseIndex - bias + CHAR_LENGTH) % CHAR_LENGTH;
+            case true -> (baseIndex + bias) % getAlphabetLength();
+            case false -> (baseIndex - bias + getAlphabetLength()) % getAlphabetLength();
         };
     }
-    public char[] getCharsAlphabet(){
-        return CHARS_ALPHABET;
-    }
+
 
 }
