@@ -1,16 +1,11 @@
 package service;
 
-
-import constants.AppConstants;
 import util.FileHandlerUtil;
-
 import java.util.*;
 
-public class StaticAnalysisService extends Alphabet{
-   static CaesarCipherService caesarCipherService = new CaesarCipherService();
+public class StaticAnalysisService extends Alphabet {
 
-    private char[] chars;
-
+    private CaesarCipherService caesarCipher = new CaesarCipherService();
 
     private final HashMap<Character, Double> FREQUENCY_CHARS = new HashMap<>() {{
         put(' ', 0.175);
@@ -22,34 +17,7 @@ public class StaticAnalysisService extends Alphabet{
         put('т', 0.053);
     }};
 
-    public HashMap<Character, Double> calculateFrequency(String fileText) {
-
-        HashMap<Character, Double> frequencyCharsFile = new HashMap<>();
-         chars = FileHandlerUtil.readFile(fileText);
-        for (char c : chars) {
-            if (!frequencyCharsFile.containsKey(c)) {
-                double proc = proccentInput(c);
-                frequencyCharsFile.put(c, proc);
-            }
-        }
-
-        return frequencyCharsFile;
-    }
-
-    public double proccentInput(char nextChar) {
-        int resultCount = 0;
-        for (char c : chars) {
-            if (c == nextChar) {
-                resultCount++;
-            }
-        }
-        double procent = (resultCount * 1.0 / chars.length);
-
-        return (double) Math.round(procent * 1000) / 1000;
-    }
-
-
-    public void decrypt(String text) {
+    public void decrypt(String text) {  // имя зашифрованного файла
 
         HashMap<Character, Double> freqDecrypted = calculateFrequency(text);
 
@@ -58,7 +26,6 @@ public class StaticAnalysisService extends Alphabet{
 
         for (int i = 0; i < getAlphabetLength(); i++) {
 
-
             double distance = calculateFrequencyDistance(freqDecrypted, i); // ширина
 
             if (distance < bestDistance) {
@@ -66,19 +33,36 @@ public class StaticAnalysisService extends Alphabet{
                 bestKey = i;
             }
         }
-        System.out.printf("Ключ для расшифровки - %d, ширина - %f\n", bestKey, bestDistance);
-        caesarCipherService.encryptFile(text, bestKey, false, AppConstants.ENCRYPTION_MODE_CAESAR);
-
+        // System.out.printf("Ключ для расшифровки - %d, ширина - %f\n", bestKey, bestDistance); // не здесь
+        caesarCipher.encryption(text, bestKey, false);
     }
 
-    public  double calculateFrequencyDistance(HashMap<Character, Double> encryptionFile, int key) {
-            double dist = 0.0;
+    public HashMap<Character, Double> calculateFrequency(String fileText) {
+
+        HashMap<Character, Integer> quantity = new HashMap<>();
+        HashMap<Character, Double> frequencies = new HashMap<>();
+
+        char[] chars = FileHandlerUtil.readFile(fileText);
+
+        for (char c : chars) {
+            quantity.put(c, quantity.getOrDefault(c, 0) + 1);
+        }
+
+        for (Map.Entry<Character, Integer> entry : quantity.entrySet()) {
+            frequencies.put(entry.getKey(), (double) entry.getValue());
+        }
+        return frequencies;
+    }
+
+    public double calculateFrequencyDistance(HashMap<Character, Double> encryptionFile, int key) {
+        double dist = 0.0;
 
         for (Map.Entry<Character, Double> entry : FREQUENCY_CHARS.entrySet()) {
+
             char keys = entry.getKey();
             double value = entry.getValue();
 
-            char decrypt = encrypt(keys, key);
+            char decrypt = caesarCipher.charOffset(new char[]{keys}, key, true)[0];
             double activDist = encryptionFile.getOrDefault(decrypt, 0.0);
 
             dist += Math.pow(value - activDist, 2);
@@ -86,14 +70,4 @@ public class StaticAnalysisService extends Alphabet{
         }
         return Math.sqrt(dist);
     }
-
-//    public static char encrypt(char oldChar, int key){
-//        char result;
-//       int indexOld = caesarCipherService.findCharIndex(oldChar);
-//       int newIndex = (indexOld + key) % caesarCipherService.getAlphabet().length;
-//        result = caesarCipherService.getAlphabet()[newIndex];
-//        return result;
-//    }
-
-
 }

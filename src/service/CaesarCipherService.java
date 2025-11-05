@@ -1,46 +1,26 @@
 package service;
 
-import constants.AppConstants;
 import util.*;
 
+public class CaesarCipherService extends Alphabet {
 
-public class CaesarCipherService extends Alphabet{
+    FileHandlerUtil fileHandler = new FileHandlerUtil();
 
+    public char[] charOffset(char[] oldChars, int key, boolean isEncrypt) {
 
-    FileHandlerUtil fileHandlerUtil = new FileHandlerUtil();
+        char[] newChars = new char[oldChars.length];
 
-
-
-
-
-    public char[] encryptFile(String fileName, int key, boolean isEncrypt, String mode) {
-
-        char[] fileText = FileHandlerUtil.readFile(fileName);
-        char[] result = new char[fileText.length];
-
-        for (int i = 0; i < fileText.length; i++) {
-            int charIndex = findCharIndex(fileText[i]);
+        for (int i = 0; i < oldChars.length; i++) {
+            int charIndex = findCharIndex(oldChars[i]);
 
             if (charIndex != -1) {
                 int shiftedIndex = calculateShift(charIndex, key, isEncrypt);
-                result[i] = getAlphabet()[shiftedIndex];
+                newChars[i] = getAlphabet()[shiftedIndex];
             } else {
-                result[i] = fileText[i];
+                newChars[i] = oldChars[i];
             }
         }
-//        if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_CAESAR)) {
-//            fileHandlerUtil.createEncryptedFile(fileName, result, isEncrypt);
-//        } else if (mode.equalsIgnoreCase(AppConstants.ENCRYPTION_MODE_BRUTEFORCE)) {
-//            fileHandlerUtil.createBruteForceFile(fileName, result, key);
-//        }
-        return result;
-    }
-
-    public void bruteForceDecrypt(String fileName) {
-
-        for (int key = 0; key < getAlphabetLength(); key++) {
-            encryptFile(fileName, key, true, AppConstants.ENCRYPTION_MODE_BRUTEFORCE);
-        }
+        return newChars;
     }
 
     public int findCharIndex(char chr) {
@@ -61,5 +41,11 @@ public class CaesarCipherService extends Alphabet{
         };
     }
 
+    public void encryption(String fileName, int key, boolean isEncrypt) {
 
+        char[] fileText = FileHandlerUtil.readFile(fileName);
+        char[] newText = charOffset(fileText, key, isEncrypt);
+
+        fileHandler.createEncryptedFile(fileName, newText, isEncrypt);
+    }
 }

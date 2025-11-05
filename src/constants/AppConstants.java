@@ -17,8 +17,6 @@ public interface AppConstants {
        String GOOD_BAY = "Вы закрыли программу, всего хорошего!";
 
        String PROCESS_COMPLETE = "Файл сохранен, путь до результирующего файла: ";
-       String ENCRYPTION_MODE_CAESAR = "caesar";
-       String ENCRYPTION_MODE_BRUTEFORCE = "bruteforse";
 
        String FILE_NAME_ENCRYPTED = "encryptedFile.txt";
        String FILE_NAME_DECRYPTED = "decryptionFile.txt";

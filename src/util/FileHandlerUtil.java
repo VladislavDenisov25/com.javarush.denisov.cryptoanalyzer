@@ -1,10 +1,8 @@
 package util;
 
 import constants.AppConstants;
-
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 
 public class FileHandlerUtil {
 
@@ -22,28 +20,27 @@ public class FileHandlerUtil {
         System.out.println(AppConstants.PROCESS_COMPLETE + targetFile);
     }
 
-//    public void createBruteForceFile(String sourceName, char[] content, int key) {
-//
-//        Path parentDir = Path.of(sourceName).toAbsolutePath().getParent();
-//        Path bruteDir = parentDir.resolve(AppConstants.DIRECTORY_BRUTEFORCE);
-//
-//        try {
-//            Files.createDirectories(bruteDir);
-//
-//            String fileName = AppConstants.FILE_NAME_BRUTFORSE + key + AppConstants.EXTENSION;
-//
-//            Path target = bruteDir.resolve(fileName);
-//            writeFile(target.toFile(), content);
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(AppConstants.ERROR_CREAT_FILE_BRUTFORSE + key, e);
-//        }
-//    }
+    public void createBruteForceFile(String sourceName, char[] content, int key) {
+
+        Path parentDir = Path.of(sourceName).toAbsolutePath().getParent();
+        Path bruteDir = parentDir.resolve(AppConstants.DIRECTORY_BRUTEFORCE);
+
+        try {
+            Files.createDirectories(bruteDir);
+
+            String fileName = AppConstants.FILE_NAME_BRUTFORSE + key + AppConstants.EXTENSION;
+
+            Path target = bruteDir.resolve(fileName);
+            writeFile(target.toFile(), content);
+
+        } catch (IOException e) {
+            throw new RuntimeException(AppConstants.ERROR_CREAT_FILE_BRUTFORSE + key, e);
+        }
+    }
 
     public static char[] readFile(String fileName) {
 
         StringBuilder builder = new StringBuilder();
-
 
         try (BufferedReader buffer = new BufferedReader(new FileReader(fileName))) {
             while (buffer.ready()) {
